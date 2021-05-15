@@ -16,23 +16,14 @@ class WaterContainer {
     if (height.length < 2) 2
     else {
       val cloneArr = height.clone()
-
       scala.util.Sorting.quickSort(cloneArr)
-      val firstMax = cloneArr(cloneArr.length - 1)
-      val secondMax = cloneArr(cloneArr.length - 2)
-      val firstI = height.indexOf(firstMax)
-      val firstLi = height.lastIndexOf(firstMax)
-      val secondI = height.indexOf(secondMax)
-      val secondLi = height.lastIndexOf(secondMax)
-
-      max(
-        max(
-          max(abs(firstI - secondI), abs(firstI - secondLi)),
-          max(abs(firstLi - secondI), abs(firstLi - secondLi)),
-        ),
-        2
-      )
+      max(minimumContainersY(cloneArr.reverse.take(10), height), 2)
     }
+  }
+
+  private def minimumContainersY(sortedTopPoints: Array[Int], height: Array[Int]): Int = {
+    val indexes = sortedTopPoints.flatMap(el => Array(height.indexOf(el), height.lastIndexOf(el))).toList
+    indexes.map(i => indexes.map(i2 => abs(i - i2)).max).max
   }
 
   @tailrec
