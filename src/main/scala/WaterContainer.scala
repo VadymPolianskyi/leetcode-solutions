@@ -39,20 +39,21 @@ class WaterContainer {
   private def findBySliding(height: Array[Int], slice: Int, lastMax: Int)(implicit sliceLimit: Int): Int = {
     if (slice < sliceLimit) lastMax
     else {
-      val foundMax = slideAndFindMax(height, lastMax)(slice)
+      val foundMax = slideAndFindMaxArea(height, lastMax, 0)(slice)
       findBySliding(height, slice - 1, max(foundMax, lastMax))
     }
   }
 
   @tailrec
-  private def slideAndFindMax(height: Array[Int], lastMax: Int)(implicit slice: Int): Int = {
+  private def slideAndFindMaxArea(height: Array[Int], lastMax: Int, shorterX: Int)(implicit slice: Int): Int = {
+    val y = slice - 1
     if (height.length < slice) lastMax
+    else if (height.head < shorterX || height(y) < shorterX)
+      slideAndFindMaxArea(height.tail, lastMax, shorterX)
     else {
-      val maxArea = fullArea(height.take(slice))
-      slideAndFindMax(height.tail, max(maxArea, lastMax))
+      val x = min(height.head, height(y))
+      val maxArea = max(x * y, lastMax)
+      slideAndFindMaxArea(height.tail, maxArea, x)
     }
   }
-
-  private def fullArea(height: Array[Int]): Int =
-    min(height.head, height.last) * (height.length - 1)
 }
