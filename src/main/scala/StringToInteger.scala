@@ -25,7 +25,3 @@ class StringToInteger {
     }
   }
 }
-
-object StringToInteger extends App {
-  println(new StringToInteger().myAtoi("+-12"))
-}
