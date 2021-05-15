@@ -26,6 +26,11 @@ class WaterContainerTest extends AnyFunSuite {
     assertResult(2)(res)
   }
 
+  test("Find container 4") {
+    val res = container.maxArea(Array(2,1))
+    assertResult(1)(res)
+  }
+
   test("Find nothing 1") {
     val res = container.maxArea(Array(1, 0))
     assertResult(0)(res)
