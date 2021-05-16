@@ -1,50 +1,29 @@
 package com.polianskyi.leetcode
 
-import Math.{max, min, abs}
+import java.lang.Math.{max, min}
 import scala.annotation.tailrec
 
 class WaterContainer {
-  def maxArea(height: Array[Int]): Int = {
-    val sliceLimit = if (height.length > 1000) predictSliceLimit(height) else 2
-    println(s"Slice Limit: $sliceLimit")
-    val result = findBySliding(height, height.length, 0)(sliceLimit)
-    println(s"Max Area: $result")
-    result
-  }
-
-  private def predictSliceLimit(height: Array[Int]): Int = {
-    if (height.length < 2) 2
-    else {
-      val cloneArr = height.clone()
-      scala.util.Sorting.quickSort(cloneArr)
-      max(minimumContainersY(cloneArr.reverse.take(10), height), 2)
-    }
-  }
-
-  private def minimumContainersY(sortedTopPoints: Array[Int], height: Array[Int]): Int = {
-    val indexes = sortedTopPoints.flatMap(el => Array(height.indexOf(el), height.lastIndexOf(el))).toList
-    indexes.map(i => indexes.map(i2 => abs(i - i2)).max).max
-  }
+  def maxArea(height: Array[Int]): Int = findMaximum()(height)
 
   @tailrec
-  private def findBySliding(height: Array[Int], slice: Int, lastMax: Int)(implicit sliceLimit: Int): Int = {
-    if (slice < sliceLimit) lastMax
+  private def findMaximum(index: Int = 0, maximum: Int = 0)(implicit height: Array[Int]): Int = {
+    if (height.length < (index + 1)) maximum
     else {
-      val foundMax = slideAndFindMaxArea(height, lastMax, 0)(slice)
-      findBySliding(height, slice - 1, max(foundMax, lastMax))
+      val foundMax = findMaxAreaByIndexes(index, height.length - 1, maximum)
+      findMaximum(index + 1, foundMax)
     }
   }
 
   @tailrec
-  private def slideAndFindMaxArea(height: Array[Int], lastMax: Int, shorterX: Int)(implicit slice: Int): Int = {
-    val y = slice - 1
-    if (height.length < slice) lastMax
-    else if (height.head < shorterX || height(y) < shorterX)
-      slideAndFindMaxArea(height.tail, lastMax, shorterX)
-    else {
-      val x = min(height.head, height(y))
-      val maxArea = max(x * y, lastMax)
-      slideAndFindMaxArea(height.tail, maxArea, x)
-    }
+  private def findMaxAreaByIndexes(i1: Int, i2: Int, maxArea: Int)(implicit height: Array[Int]): Int = {
+    val x1 = height(i1)
+    val x2 = height(i2)
+    val y = i2 - i1
+    val optimisticArea = x1 * y
+
+    if (optimisticArea <= maxArea) maxArea
+    else if (x2 >= x1) optimisticArea
+    else findMaxAreaByIndexes(i1, i2 - 1, max(maxArea, y * min(x1, x2)))
   }
 }
