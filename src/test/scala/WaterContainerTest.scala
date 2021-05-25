@@ -1,10 +1,8 @@
 package com.polianskyi.leetcode
 
-import WaterContainerTest.readArray
+import FileArrayReader.readArray
 
 import org.scalatest.funsuite.AnyFunSuite
-
-import scala.io.Source
 
 class WaterContainerTest extends AnyFunSuite {
 
@@ -46,27 +44,18 @@ class WaterContainerTest extends AnyFunSuite {
   }
 
   test("Find from long array 1") {
-    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(1)))
+    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(1, "water-container-array")))
     assertResult(48431514)(res)
   }
 
   test("Find from long array 2") {
-    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(2)))
+    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(2, "water-container-array")))
     assertResult(4913370)(res)
   }
 
   test("Find from long array 3") {
-    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(3)))
+    val res = BenchmarkUtil.withBenchmarkCheck(() => container.maxArea(readArray(3, "water-container-array")))
     assertResult(50000000)(res)
   }
 
-}
-
-object WaterContainerTest {
-  def readArray(line: Int): Array[Int] = {
-    val source = Source.fromResource("water-container-array.txt")
-    val a = source.getLines().toList(line - 1)
-    source.close()
-    a.split(",").map(_.toInt)
-  }
 }
