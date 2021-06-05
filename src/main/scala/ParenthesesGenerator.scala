@@ -3,18 +3,20 @@ package com.polianskyi.leetcode
 class ParenthesesGenerator {
 
   def generateParenthesis(n: Int): List[String] = {
-    generate(n).distinct
+    tune(n * 2).distinct
   }
 
-  def generate(n: Int, acc: List[String] = List("()")): List[String] = {
-    if (n == 1) acc
-    else {
-      generate(n - 1, acc.flatMap(created => tune(created)))
-    }
+  def tune(limit: Int, acc: List[String] = List("(")): List[String] = {
+    if (limit <= 1) acc
+    else tune(limit - 1, acc.flatMap(s => add(s, limit)))
   }
 
-  def tune(created: String): List[String] =
-    List(s"$created()", s"($created)", s"()$created").distinct
+  def add(s: String, limit: Int): List[String] = {
+    val opened = s.count(_ == '(')
+    val closed = s.count(_ == ')')
 
+    if (opened <= closed) List(s"$s(")
+    else if (limit == 1 || opened - closed >= limit - 1) List(s"$s)")
+    else List(s"$s(", s"$s)")
+  }
 }
-//(())(())

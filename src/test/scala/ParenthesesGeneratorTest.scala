@@ -21,14 +21,12 @@ class ParenthesesGeneratorTest  extends AnyFunSuite  {
   test("Convert from 4") {
     val res = generator.generateParenthesis(4)
     val expected = List("(((())))","((()()))","((())())","((()))()","(()(()))","(()()())","(()())()","(())(())","(())()()","()((()))","()(()())","()(())()","()()(())","()()()()")
-//    (())(())
-
     res should contain theSameElementsAs expected
   }
 
   test("Convert from 8") {
     val res = generator.generateParenthesis(8)
-    assert(res.size == 1094)
+    assert(res.size == 1430)
   }
 
 }
