@@ -1,7 +1,6 @@
 package com.polianskyi.leetcode
 
-import ThreeSumTest.compareListsIfEquals
-
+import AssertHelper.compareListsIfEquals
 import org.scalatest.funsuite.AnyFunSuite
 
 class ThreeSumTest extends AnyFunSuite {
@@ -35,12 +34,5 @@ class ThreeSumTest extends AnyFunSuite {
       val res = processor.threeSum(FileArrayReader.readArray(2, "three-sum-array"))
       assert(compareListsIfEquals(List(List(0, 0, 0)), res))
     }
-  }
-}
-
-object ThreeSumTest {
-  def compareListsIfEquals(a: List[List[Int]], b: List[List[Int]]): Boolean = {
-    assert(a.length == b.length)
-    a.zip(b).count(x => x._1 != x._2) == 0
   }
 }

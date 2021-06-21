@@ -1,6 +1,6 @@
 package com.polianskyi.leetcode
 
-import ThreeSumTest.compareListsIfEquals
+import AssertHelper.compareListsIfEquals
 
 import org.scalatest.funsuite.AnyFunSuite
 

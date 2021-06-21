@@ -1,7 +1,5 @@
 package com.polianskyi.leetcode
 
-import ThreeSumTest.compareListsIfEquals
-
 import org.scalatest.funsuite.AnyFunSuite
 
 class CountAndSayTest extends AnyFunSuite {
