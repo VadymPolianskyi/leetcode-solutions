@@ -22,8 +22,8 @@ class MergeIntervals {
       val current = intervals(i)
       if (current(0) <= previousEnd) {
         val last = acc.last
-        if (last(0) > current(0)) last.update(0, current(0))
-        if (last(1) < current(1)) last.update(1, current(1))
+        last.update(0, math.min(current(0), last(0)))
+        last.update(1, math.max(current(1), last(1)))
         seqMerge(intervals, i + 1, acc, current(1))
       } else {
         if (previousEnd != -1) acc.last.update(1, previousEnd)
