@@ -9,6 +9,7 @@ class SetMatrixZeroes {
 
   def setZeroes(matrix: Array[Array[Int]]): Unit = {
     goThrough(matrix)
+    coords.clear()
   }
 
   @tailrec
